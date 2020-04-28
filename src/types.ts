@@ -1,66 +1,82 @@
 import type { Node as TreeNode } from "./tree-api";
 
-export interface ElementNode {
+export interface NodeBase {
   elementType: string;
+  attrs: { [k: string]: any };
 }
 
-export interface RootData extends ElementNode {
+export interface RootNode extends NodeBase {
   elementType: "root";
 }
 
-export interface GridData extends ElementNode {
-  elementType: "grid";
+type GridAttrs = {
   rows: Array<string>;
   columns: Array<string>;
   areas: string[][];
+};
+export interface GridNode extends NodeBase {
+  elementType: "grid";
+  attrs: GridAttrs;
 }
 
-export interface FlexData extends ElementNode {
-  elementType: "flex";
+type FlexAttrs = {
   direction: "column" | "row";
+};
+export interface FlexNode extends NodeBase {
+  elementType: "flex";
+  attrs: FlexAttrs;
 }
 
-export interface GridAreaData extends ElementNode {
-  elementType: "grid-area";
+export type GridAreaAttrs = {
   gridArea: string;
+};
+export interface GridAreaNode extends NodeBase {
+  elementType: "grid-area";
+  attrs: GridAreaAttrs;
 }
 
-export interface StyleData extends ElementNode {
-  elementType: "style";
-  style: object;
-}
-
-export interface TextData extends ElementNode {
-  elementType: "text";
+type TextAttrs = {
   value: string;
+};
+export interface TextNode extends NodeBase {
+  elementType: "text";
+  attrs: TextAttrs;
 }
 
-export interface ImageData extends ElementNode {
-  elementType: "image";
+type ImageAttrs = {
   src: string;
+};
+export interface ImageNode extends NodeBase {
+  elementType: "image";
+  attrs: ImageAttrs;
 }
 
-export interface WysiwygData extends ElementNode {
-  elementType: "wysiwyg";
+export type WysiwygAttrs = {
   data: any;
+};
+export interface WysiwygNode extends NodeBase {
+  elementType: "wysiwyg";
+  attrs: WysiwygAttrs;
 }
 
-export interface CodeData extends ElementNode {
-  elementType: "wysiwyg";
+type CodeAttrs = {
   name: string;
   files: { [k: string]: string };
+};
+export interface CodeNode extends NodeBase {
+  elementType: "code";
+  attrs: CodeAttrs;
 }
 
 export type ElementData =
-  | RootData
-  | GridData
-  | GridAreaData
-  | StyleData
-  | FlexData
-  | TextData
-  | ImageData
-  | WysiwygData
-  | CodeData;
+  | RootNode
+  | GridNode
+  | GridAreaNode
+  | FlexNode
+  | TextNode
+  | ImageNode
+  | WysiwygNode
+  | CodeNode;
 
 export type ElementTree = TreeNode<ElementData>;
 
@@ -68,35 +84,32 @@ export type ElementSource =
   | {
       displayName: string;
       sourceType: "text";
-      value: string;
+      attrs: TextAttrs;
     }
   | {
       displayName: string;
       sourceType: "image";
-      src: string;
+      attrs: ImageAttrs;
     }
   | {
       displayName: string;
       sourceType: "grid";
-      rows: string[];
-      columns: string[];
-      areas: string[][];
+      attrs: GridAttrs;
     }
   | {
       displayName: string;
       sourceType: "flex";
-      direction: "row" | "column";
+      attrs: FlexAttrs;
     }
   | {
       displayName: string;
       sourceType: "wysiwyg";
-      data: [];
+      attrs: WysiwygAttrs;
     }
   | {
       displayName: string;
       sourceType: "code";
-      name: string;
-      files: { [k: string]: string };
+      attrs: CodeNode;
     };
 
 export type DragType = SourceDragType | ElementDragType;

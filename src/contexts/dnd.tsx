@@ -1,18 +1,19 @@
 import { useDrag, useDrop, DragSourceMonitor } from "react-dnd";
 import {
   ElementData,
-  GridAreaData,
   DragType,
   DropType,
   ElementTree,
   SourceDragType,
-  ElementNode,
-  GridData,
+  NodeBase,
+  GridNode,
+  GridAreaAttrs,
+  GridAreaNode,
 } from "../types";
 import { useTreeDispatch } from "./tree";
 import { swapNodes, moveNode, addChild } from "../reducer";
 import { ulid } from "ulid";
-import { uniqueId } from "lodash-es";
+import { uniqueId, flatten } from "lodash-es";
 // import { ElementData, TreeNode } from "./types";
 
 export const DND_CONTEXT = "dnd-context";
@@ -118,7 +119,9 @@ function createElementDataBySourceType(
       return {
         data: {
           elementType: "text",
-          value: ulid().slice(-5),
+          attrs: {
+            value: ulid().slice(-5),
+          },
         },
         children: [],
       };
@@ -128,7 +131,7 @@ function createElementDataBySourceType(
       return {
         data: {
           elementType: "image",
-          src: drag.source.src,
+          attrs: drag.source.attrs,
         },
         children: [],
       };
@@ -138,7 +141,7 @@ function createElementDataBySourceType(
       return {
         data: {
           elementType: "flex",
-          direction: drag.source.direction,
+          attrs: drag.source.attrs,
         },
         children: [],
       };
@@ -147,7 +150,7 @@ function createElementDataBySourceType(
       return {
         data: {
           elementType: "wysiwyg",
-          data: [],
+          attrs: drag.source.attrs,
         },
         children: [],
       };
@@ -155,21 +158,21 @@ function createElementDataBySourceType(
     case "grid": {
       const childData = {
         elementType: "grid",
-        rows: drag.source.rows,
-        columns: drag.source.columns,
-        areas: drag.source.areas,
-      } as GridData;
-      // @ts-ignore
-      const children = drag.source.areas.flat().map((areaName: string) => {
-        return {
-          id: uniqueId(),
-          data: {
-            elementType: "grid-area",
-            gridArea: areaName,
-          } as GridAreaData,
-          children: [],
-        };
-      });
+        attrs: drag.source.attrs,
+      } as GridNode;
+      const children = flatten(drag.source.attrs.areas).map(
+        (areaName: string) => {
+          return {
+            id: uniqueId() as string,
+            data: {
+              elementType: "grid-area",
+              attrs: {
+                areaName,
+              } as any, // TODO: FIX ME
+            } as ElementData,
+          } as ElementTree;
+        }
+      );
       return { data: childData, children };
     }
     default: {

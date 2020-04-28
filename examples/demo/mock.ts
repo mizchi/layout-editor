@@ -5,74 +5,92 @@ export const sources: ElementSource[] = [
   {
     displayName: "Text",
     sourceType: "text",
-    value: "",
+    attrs: {
+      value: "",
+    },
   },
   {
     displayName: "Image",
     sourceType: "image",
-    src:
-      "http://imgcc.naver.jp/kaze/mission/USER/20140612/42/4930882/68/598x375xe4022b20b838933f265c1591.jpg",
+    attrs: {
+      src:
+        "http://imgcc.naver.jp/kaze/mission/USER/20140612/42/4930882/68/598x375xe4022b20b838933f265c1591.jpg",
+    },
   },
   {
     displayName: "Row",
     sourceType: "flex",
-    direction: "row",
+    attrs: {
+      direction: "row",
+    },
   },
   {
     displayName: "Column",
     sourceType: "flex",
-    direction: "column",
+    attrs: {
+      direction: "column",
+    },
   },
   {
     displayName: "Grid(1x1)",
     sourceType: "grid",
-    rows: ["1fr"],
-    columns: ["1fr"],
-    areas: [["1"]],
+    attrs: {
+      rows: ["1fr"],
+      columns: ["1fr"],
+      areas: [["1"]],
+    },
   },
   {
     displayName: "Grid(2x2)",
     sourceType: "grid",
-    rows: ["1fr", "1fr"],
-    columns: ["1fr", "1fr"],
-    areas: [
-      ["a", "b"],
-      ["c", "d"],
-    ],
+    attrs: {
+      rows: ["1fr", "1fr"],
+      columns: ["1fr", "1fr"],
+      areas: [
+        ["a", "b"],
+        ["c", "d"],
+      ],
+    },
   },
   {
     displayName: "Wysiwyg",
     sourceType: "wysiwyg",
-    data: [],
+    attrs: {
+      data: [],
+    },
   },
 ];
 
 export const sampleTree: ElementTree = {
   id: "$root",
-  data: { elementType: "root" },
+  data: { elementType: "root", attrs: {} },
   children: [
     {
       id: uniqueId(),
       data: {
         elementType: "grid",
-        rows: ["1fr", "1fr"],
-        columns: ["1fr", "1fr"],
-        areas: [
-          ["a", "b"],
-          ["c", "d"],
-        ],
+        attrs: {
+          rows: ["1fr", "1fr"],
+          columns: ["1fr", "1fr"],
+          areas: [
+            ["a", "b"],
+            ["c", "d"],
+          ],
+        },
       },
       children: [
         {
           id: uniqueId(),
           data: {
             elementType: "grid-area",
-            gridArea: "a",
+            attrs: {
+              gridArea: "a",
+            },
           },
           children: [
             {
               id: uniqueId(),
-              data: { elementType: "text", value: "foo" },
+              data: { elementType: "text", attrs: { value: "foo" } },
               children: [],
             },
           ],
@@ -81,7 +99,9 @@ export const sampleTree: ElementTree = {
           id: uniqueId(),
           data: {
             elementType: "grid-area",
-            gridArea: "b",
+            attrs: {
+              gridArea: "b",
+            },
           },
           children: [],
         },
@@ -89,30 +109,38 @@ export const sampleTree: ElementTree = {
           id: uniqueId(),
           data: {
             elementType: "grid-area",
-            gridArea: "c",
+            attrs: {
+              gridArea: "c",
+            },
           },
           children: [
             {
               id: uniqueId(),
               data: {
                 elementType: "grid",
-                rows: ["1fr"],
-                columns: ["1fr", "1fr"],
-                areas: [["e", "f"]],
+                attrs: {
+                  rows: ["1fr"],
+                  columns: ["1fr", "1fr"],
+                  areas: [["e", "f"]],
+                },
               },
               children: [
                 {
                   id: uniqueId(),
                   data: {
                     elementType: "grid-area",
-                    gridArea: "e",
+                    attrs: {
+                      gridArea: "e",
+                    },
                   },
                   children: [
                     {
                       id: uniqueId(),
                       data: {
                         elementType: "flex",
-                        direction: "column",
+                        attrs: {
+                          direction: "column",
+                        },
                       },
                       children: [],
                     },
@@ -122,14 +150,18 @@ export const sampleTree: ElementTree = {
                   id: uniqueId(),
                   data: {
                     elementType: "grid-area",
-                    gridArea: "f",
+                    attrs: {
+                      gridArea: "f",
+                    },
                   },
                   children: [
                     {
                       id: uniqueId(),
                       data: {
                         elementType: "text",
-                        value: "yyy",
+                        attrs: {
+                          value: "yyy",
+                        },
                       },
                       children: [],
                     },
@@ -143,15 +175,19 @@ export const sampleTree: ElementTree = {
           id: uniqueId(),
           data: {
             elementType: "grid-area",
-            gridArea: "d",
+            attrs: {
+              gridArea: "d",
+            },
           },
           children: [
             {
               id: uniqueId(),
               data: {
                 elementType: "image",
-                src:
-                  "http://imgcc.naver.jp/kaze/mission/USER/20140612/42/4930882/68/598x375xe4022b20b838933f265c1591.jpg",
+                attrs: {
+                  src:
+                    "http://imgcc.naver.jp/kaze/mission/USER/20140612/42/4930882/68/598x375xe4022b20b838933f265c1591.jpg",
+                },
               },
               children: [],
             },
@@ -164,26 +200,30 @@ export const sampleTree: ElementTree = {
 
 export const rootTree: ElementTree = {
   id: "$root",
-  data: { elementType: "root" },
+  data: { elementType: "root", attrs: {} },
   children: [],
 };
 
 export const flexTree: ElementTree = {
   id: "$root",
-  data: { elementType: "root" },
+  data: { elementType: "root", attrs: {} },
   children: [
     {
       id: uniqueId(),
       data: {
         elementType: "flex",
-        direction: "column",
+        attrs: {
+          direction: "column",
+        },
       },
       children: [
         {
           id: uniqueId(),
           data: {
             elementType: "text",
-            value: "text",
+            attrs: {
+              value: "text",
+            },
           },
           children: [],
         },
@@ -194,13 +234,15 @@ export const flexTree: ElementTree = {
 
 export const wysiwigTree: ElementTree = {
   id: "$root",
-  data: { elementType: "root" },
+  data: { elementType: "root", attrs: {} },
   children: [
     {
       id: uniqueId(),
       data: {
         elementType: "wysiwyg",
-        data: [],
+        attrs: {
+          data: [],
+        },
       },
       children: [],
     },

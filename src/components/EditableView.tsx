@@ -30,8 +30,8 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
       );
     }
     case "grid": {
-      const gridAreaNames = flatten(data.areas);
-      const { rows, columns, areas } = data;
+      const gridAreaNames = flatten(data.attrs.areas);
+      const { rows, columns, areas } = data.attrs;
       return (
         <EditableBox
           showHeader={showLayoutHeader}
@@ -43,7 +43,7 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
               const hit = props.tree.children.find((c) => {
                 return (
                   c.data.elementType === "grid-area" &&
-                  c.data.gridArea === gridArea
+                  c.data.attrs.gridArea === gridArea
                 );
               })!;
               return (
@@ -78,11 +78,11 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
             tree={props.tree}
             depth={props.depth + 1}
           >
-            <Flex flexDirection={data.direction}>
+            <Flex flexDirection={data.attrs.direction}>
               {isBlank ? (
                 <BlankPane
                   parentId={props.tree.id}
-                  text={`Add ${data.direction}`}
+                  text={`Add ${data.attrs.direction}`}
                 />
               ) : (
                 <View tree={props.tree} />
@@ -98,8 +98,8 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
           tree={props.tree}
           depth={props.depth + 1}
         >
-          <Flex flexDirection={data.direction}>
-            <Flex flex={4} flexDirection={data.direction}>
+          <Flex flexDirection={data.attrs.direction}>
+            <Flex flex={4} flexDirection={data.attrs.direction}>
               {props.tree.children.map((child) => {
                 return (
                   <EditableView
@@ -113,7 +113,7 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
             <Flex flex={1}>
               <BlankPane
                 parentId={props.tree.id}
-                text={`Add ${data.direction}`}
+                text={`Add ${data.attrs.direction}`}
               />
             </Flex>
           </Flex>
@@ -163,7 +163,7 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
           tree={props.tree}
           depth={props.depth + 1}
         >
-          WIP: {data.elementType}
+          WIP: {(data as any).elementType}
         </EditableBox>
       );
     }

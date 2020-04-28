@@ -19,7 +19,7 @@ export function View(props: { tree: ElementTree }) {
 
     case "flex": {
       return (
-        <Flex flexDirection={data.direction}>
+        <Flex flexDirection={data.attrs.direction}>
           {props.tree.children.map((c) => {
             return <View key={c.id} tree={c} />;
           })}
@@ -28,15 +28,15 @@ export function View(props: { tree: ElementTree }) {
     }
 
     case "grid": {
-      const gridAreaNames = flatten(data.areas);
-      const { rows, columns, areas } = data;
+      const gridAreaNames = flatten(data.attrs.areas);
+      const { rows, columns, areas } = data.attrs;
       return (
         <Grid rows={rows} columns={columns} areas={areas}>
           {gridAreaNames.map((gridArea) => {
             const existNode = props.tree.children.find((c) => {
               return (
                 c.data.elementType === "grid-area" &&
-                c.data.gridArea === gridArea
+                c.data.attrs.gridArea === gridArea
               );
             });
             return (
@@ -58,13 +58,13 @@ export function View(props: { tree: ElementTree }) {
       );
     }
     case "text": {
-      return <Text>{data.value}</Text>;
+      return <Text>{data.attrs.value}</Text>;
     }
     case "image": {
       return (
         <Pane>
           <img
-            src={data.src}
+            src={data.attrs.src}
             style={{
               width: "auto",
               height: "auto",

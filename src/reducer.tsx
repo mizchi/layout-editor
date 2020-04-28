@@ -1,6 +1,6 @@
 import { toInvertedTree, InvertedTree } from "./tree-api/inverted";
 import { reducerWithoutInitialState } from "typescript-fsa-reducers";
-import { ElementData, ElementTree, GridAreaData } from "./types";
+import { ElementData, ElementTree, GridAreaNode } from "./types";
 import actionCreatorFactory from "typescript-fsa";
 import * as invUtils from "./tree-api/inverted";
 import * as treeUtils from "./tree-api";

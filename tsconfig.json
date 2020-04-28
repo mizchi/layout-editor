@@ -1,4 +1,5 @@
 {
+  "exclude": ["lib"],
   "include": ["src", "webpack.config.js"],
   "compilerOptions": {
     "declaration": true,
