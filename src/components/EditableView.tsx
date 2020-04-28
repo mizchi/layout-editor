@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Pane, Grid, Flex } from "./elements";
-import { ElementTree, isLayoutElement } from "../types";
+import { ElementTree, isLayoutElement, GridNode } from "../types";
 import flatten from "lodash-es/flatten";
 import { EditableBox } from "./EditableBox";
 import { BlankPane } from "./BlankPane";
 import { View } from "./View";
 import { useTreeState } from "../contexts/tree";
 import { TreeEditMode } from "../reducer";
+import { EditbaleGrid } from "./EditableGrid";
 import Modal from "react-modal";
 
 export function EditableView(props: { tree: ElementTree; depth: number }) {
@@ -32,31 +33,36 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
     case "grid": {
       const gridAreaNames = flatten(data.attrs.areas);
       const { rows, columns, areas } = data.attrs;
+      const gridEditable = editMode === TreeEditMode.LAYOUT;
       return (
         <EditableBox
           showHeader={showLayoutHeader}
           tree={props.tree}
           depth={props.depth + 1}
         >
-          <Grid rows={rows} columns={columns} areas={areas}>
-            {gridAreaNames.map((gridArea) => {
-              const hit = props.tree.children.find((c) => {
+          {gridEditable ? (
+            <EditbaleGrid initialData={data.attrs} tree={props.tree} />
+          ) : (
+            <Grid rows={rows} columns={columns} areas={areas}>
+              {gridAreaNames.map((gridArea) => {
+                const hit = props.tree.children.find((c) => {
+                  return (
+                    c.data.elementType === "grid-area" &&
+                    c.data.attrs.gridArea === gridArea
+                  );
+                })!;
                 return (
-                  c.data.elementType === "grid-area" &&
-                  c.data.attrs.gridArea === gridArea
+                  <Pane gridArea={gridArea} key={gridArea}>
+                    <EditableView
+                      key={hit.id}
+                      tree={hit}
+                      depth={props.depth + 1}
+                    />
+                  </Pane>
                 );
-              })!;
-              return (
-                <Pane gridArea={gridArea} key={gridArea}>
-                  <EditableView
-                    key={hit.id}
-                    tree={hit}
-                    depth={props.depth + 1}
-                  />
-                </Pane>
-              );
-            })}
-          </Grid>
+              })}
+            </Grid>
+          )}
         </EditableBox>
       );
     }

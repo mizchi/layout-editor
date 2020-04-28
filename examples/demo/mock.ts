@@ -1,5 +1,6 @@
 import { ElementTree, ElementSource } from "../../src/types";
 import uniqueId from "lodash-es/uniqueId";
+import range from "lodash-es/range";
 
 export const sources: ElementSource[] = [
   {
@@ -37,7 +38,7 @@ export const sources: ElementSource[] = [
     attrs: {
       rows: ["1fr"],
       columns: ["1fr"],
-      areas: [["1"]],
+      areas: [["a"]],
     },
   },
   {
@@ -228,6 +229,42 @@ export const flexTree: ElementTree = {
           children: [],
         },
       ],
+    },
+  ],
+};
+
+export const gridTree: ElementTree = {
+  id: "$root",
+  data: { elementType: "root", attrs: {} },
+  children: [
+    {
+      id: uniqueId(),
+      data: {
+        elementType: "grid",
+        attrs: {
+          rows: ["1fr", "1fr", "1fr"],
+          columns: ["1fr", "1fr", "1fr"],
+          areas: [
+            ["a", "b", "c"],
+            ["d", "e", "f"],
+            ["g", "h", "i"],
+          ],
+        },
+      },
+      children: range(9).map((i) => {
+        console.log("area", String.fromCharCode(97 + i));
+        return {
+          id: uniqueId(),
+          data: {
+            elementType: "grid-area",
+            attrs: {
+              // from a to z
+              gridArea: String.fromCharCode(97 + i),
+            },
+          },
+          children: [],
+        };
+      }),
     },
   ],
 };

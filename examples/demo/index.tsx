@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
 import { LayoutEditor } from "../../src";
-import { sources, sampleTree } from "./mock";
+import { sources, sampleTree, gridTree } from "./mock";
 
 const main = document.createElement("main");
 const modal = document.createElement("div");
@@ -15,7 +15,7 @@ console.log("render");
 ReactDOM.render(
   <LayoutEditor
     sources={sources}
-    initialTree={sampleTree}
+    initialTree={gridTree}
     onChange={(tree) => {
       console.log("[changed]", tree);
     }}

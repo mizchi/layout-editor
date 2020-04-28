@@ -64,7 +64,7 @@ export function useDropOnTree(drop: DropType) {
       };
     },
     drop(drag, _monitor) {
-      console.log("drag", drag, ": drop to", drop);
+      // console.log("drag", drag, ": drop to", drop);
       switch (drag.dragType) {
         case "source": {
           switch (drop.dropType) {
@@ -167,9 +167,10 @@ function createElementDataBySourceType(
             data: {
               elementType: "grid-area",
               attrs: {
-                areaName,
-              } as any, // TODO: FIX ME
-            } as ElementData,
+                gridArea: areaName,
+              },
+            },
+            children: [],
           } as ElementTree;
         }
       );

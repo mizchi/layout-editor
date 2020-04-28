@@ -28,7 +28,8 @@ export const getInitialState = (tree: ElementTree): TreeState => {
     tree: tree,
     inv: toInvertedTree(tree),
     selectedId: null,
-    editMode: TreeEditMode.ELEMENT,
+    // editMode: TreeEditMode.ELEMENT,
+    editMode: TreeEditMode.LAYOUT,
   };
 };
 
