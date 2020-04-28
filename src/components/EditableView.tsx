@@ -24,7 +24,8 @@ export function EditableView(props: { tree: ElementTree; depth: number }) {
     case "root": {
       return (
         <EditableBox
-          showHeader={showLayoutHeader}
+          showHeader={false}
+          // showHeader={showLayoutHeader}
           tree={props.tree}
           depth={props.depth + 1}
         />
