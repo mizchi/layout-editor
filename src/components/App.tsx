@@ -10,52 +10,62 @@ import { TreeStateProvider, useTreeState } from "../contexts/tree";
 import { TreeEditMode } from "../reducer";
 import { Props } from "../types";
 
-function EditableRootTree() {
-  const { tree } = useTreeState();
-  return <EditableView tree={tree} depth={0} />;
-}
-
-function PreviewRootTree() {
-  const { tree } = useTreeState();
-  return <View tree={tree} />;
-}
-
-function OutputTree() {
-  const { tree } = useTreeState();
-  return (
-    <Pane height="80vh" overflow="auto">
-      <pre>{JSON.stringify(tree, null, 2)}</pre>
-    </Pane>
-  );
-}
-
 function SelectedModeTree() {
-  const { editMode } = useTreeState();
+  const { tree, editMode } = useTreeState();
   switch (editMode) {
     case TreeEditMode.ALL:
     case TreeEditMode.ELEMENT:
     case TreeEditMode.LAYOUT: {
       return (
         <Flex flex={1}>
-          <EditableRootTree />
+          <EditableView tree={tree} depth={0} />
         </Flex>
       );
     }
     case TreeEditMode.PREVIEW: {
       return (
         <Flex flex={1}>
-          <PreviewRootTree />
+          <View tree={tree} />
         </Flex>
       );
     }
     case TreeEditMode.OUTPUT: {
       return (
         <Flex flex={1}>
-          <OutputTree />
+          <Pane height="80vh" overflow="auto">
+            <pre>{JSON.stringify(tree, null, 2)}</pre>
+          </Pane>
         </Flex>
       );
     }
   }
+}
+
+function AppInner() {
+  return (
+    <Flex flexDirection="column">
+      <Flex display="flex" flex={1}>
+        <Flex>
+          <Pane width={300}>
+            <SourceList />
+          </Pane>
+          <Pane flex={1} padding={10}>
+            <Flex flexDirection="column">
+              <Flex height={32}>
+                <EditModeButtonGroup />
+              </Flex>
+              <Flex height="calc(100% - 32px)">
+                <SelectedModeTree />
+              </Flex>
+            </Flex>
+          </Pane>
+        </Flex>
+        <Pane width={300}>
+          <ElementPropsEditor />
+        </Pane>
+      </Flex>
+    </Flex>
+  );
 }
 
 function AppImpl() {
@@ -74,29 +84,7 @@ function AppImpl() {
         onChange={props.onChange}
         initialTree={props.initialTree}
       >
-        <Flex flexDirection="column">
-          <Flex display="flex" flex={1}>
-            <Flex>
-              <Pane width={300}>
-                <SourceList />
-              </Pane>
-              {/* Tree */}
-              <Pane flex={1} padding={10}>
-                <Flex flexDirection="column">
-                  <Flex height={32}>
-                    <EditModeButtonGroup />
-                  </Flex>
-                  <Flex height="calc(100% - 32px)">
-                    <SelectedModeTree />
-                  </Flex>
-                </Flex>
-              </Pane>
-            </Flex>
-            <Pane width={300}>
-              <ElementPropsEditor />
-            </Pane>
-          </Flex>
-        </Flex>
+        <AppInner />
       </TreeStateProvider>
     </>
   );
