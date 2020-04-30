@@ -1,7 +1,7 @@
 # @mizchi/layout-editor
 
 ```
-yarn add @mizchi/layout-editor react-react-dom
+yarn add @mizchi/layout-editor react react-dom # with peer
 ```
 
 ## How to dev
@@ -11,6 +11,7 @@ yarn add @mizchi/layout-editor react-react-dom
 
 ## TODO
 
+- [ ] Load presets
 - [ ] Rename
 
 ## LICENSE
