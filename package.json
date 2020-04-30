@@ -1,5 +1,5 @@
 {
-  "name": "unispace-filer",
+  "name": "@mizchi/layout-editor",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
@@ -41,5 +41,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "worker-plugin": "^4.0.2"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }
