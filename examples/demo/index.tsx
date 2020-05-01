@@ -11,14 +11,23 @@ document.body.appendChild(main);
 document.body.appendChild(modal);
 
 Modal.setAppElement(modal);
-console.log("render");
 ReactDOM.render(
-  <LayoutEditor
-    sources={sources}
-    initialTree={gridTree}
-    onChange={(tree) => {
-      console.log("[changed]", tree);
-    }}
-  />,
+  <>
+    <style
+      dangerouslySetInnerHTML={{
+        __html: `
+          html, body, main {padding: 0; margin: 0; width: 100vw; height: 100vh; }
+          * { box-sizing: border-box; }
+        `,
+      }}
+    />
+    <LayoutEditor
+      sources={sources}
+      initialTree={gridTree}
+      onChange={(tree) => {
+        console.log("[changed]", tree);
+      }}
+    />
+  </>,
   main
 );

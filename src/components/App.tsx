@@ -72,14 +72,6 @@ function AppImpl() {
   const props = useContext(PropsContext);
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          html, body, main {padding: 0; margin: 0; width: 100vw; height: 100vh; }
-          * { box-sizing: border-box; }
-        `,
-        }}
-      />
       <TreeStateProvider
         onChange={props.onChange}
         initialTree={props.initialTree}
