@@ -18,7 +18,7 @@
     "react-dom": "*"
   },
   "dependencies": {
-    "immer": "^6.0.3",
+    "immer": "^9.0.6",
     "lodash-es": "^4.17.15",
     "react-modal": "^3.11.2",
     "typescript-fsa": "^3.0.0",
