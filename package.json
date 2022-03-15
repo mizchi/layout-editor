@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "immer": "^6.0.3",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "react-modal": "^3.11.2",
     "typescript-fsa": "^3.0.0",
     "typescript-fsa-reducers": "^1.2.1",
